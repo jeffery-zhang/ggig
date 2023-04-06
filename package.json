@@ -1,17 +1,20 @@
 {
   "name": "ggig",
   "version": "1.0.0",
-  "description": "Generate a '.gitignore' template with just one command!",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Generate a '.gitignore' template automaticly with just one command!",
+  "main": "./bin/ggig.js",
   "bin": {
     "ggig": "./bin/ggig.js"
   },
   "files": [
-    "./bin"
+    "./bin",
+    "./commands",
+    "./utils"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffery-zhang/ggig"
+  },
   "type": "module",
   "keywords": [
     "gitignore",
@@ -21,8 +24,8 @@
     "node",
     "template"
   ],
-  "author": "jeffery-zhang",
-  "license": "ISC",
+  "author": "jeffery-zhang <jefferyzhang1013@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^5.2.0",
     "commander": "^10.0.0",

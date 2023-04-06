@@ -3,6 +3,7 @@ import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
 import { ensureFile } from 'fs-extra'
+import { genToken } from '../utils/genToken.js'
 
 const checkFile = async () => {
   let exists
@@ -15,35 +16,58 @@ const checkFile = async () => {
   return exists
 }
 
-const requestOption = (template) => ({
-  hostname: 'api.github.com',
-  path: `/gitignore/templates/${template}`,
-  headers: {
-    'User-Agent': 'node',
-    'Authorization': 'token ' + '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',
-  },
-})
+const requestOption = (ggigToken, template) => {
+  if (!ggigToken) {
+    console.error(chalk.bgRed('Access Token is empty~ '))
+    process.exit(1)
+  }
+  return {
+    hostname: 'api.github.com',
+    path: `/gitignore/templates/${template}`,
+    headers: {
+      'User-Agent': 'node',
+      'Authorization': 'token ' + ggigToken,
+    },
+  }
+}
 
 const action = async ({ template }) => {
-  const exists = await checkFile()
+  try {
+    const ggigToken = await genToken()
+    const exists = await checkFile()
+    const option = requestOption(ggigToken, template)
+    const req = get(
+      option,
+      res => {
+        let data = ''
+        res.on('data', chunk => {
+          data += chunk
+        })
+    
+        res.on('end', async () => {
+          if (res.statusCode !== 200) {
+            console.error(chalk.bgRed('something went wrong~ '), '\n', res.statusCode, '\n', data)
+            return
+          }
+          const { name, source } = JSON.parse(data)
+          if (await checkFile()) {
+            await fs.appendFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
+          } else {
+            await fs.writeFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
+          }
+          console.log(chalk.bgGreen(`git ignore file template for ${name} has been created!`))
+        })
+      },
+    )
 
-  const req = get(requestOption(template), res => {
-    let data = ''
-    res.on('data', chunk => {
-      data += chunk
+    req.on('error', err => {
+      console.error(chalk.bgRed('something went wrong~ '), err)
     })
-
-    res.on('end', async () => {
-      if (res.statusCode !== 200) {
-        console.error(chalk.bgRed('something went wrong~ '), '\n', data)
-        return
-      }
-      const { name, source } = JSON.parse(data)
-      if (await checkFile()) {
-        const content = fs.readFileSync('./.gitignore', 'utf-8')
-      }
-    })
-  })
+  } catch(err) {
+    console.error(chalk.bgRed('Access Token is empty~ '), err)
+    process.exit(1)
+  }
+  
 }
 
 export default {

@@ -1,42 +1,56 @@
 import { get } from 'https'
 import chalk from 'chalk'
 import { dynamicText } from '../utils/dynamicText.js'
+import { genToken } from '../utils/genToken.js'
 
-const requestOption = {
-  hostname: 'api.github.com',
-  path: '/gitignore/templates',
-  headers: {
-    'User-Agent': 'node',
-    'Authorization': 'token ' + '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',
-  },
+const requestOption = (ggigToken) => {
+  if (!ggigToken) {
+    console.error(chalk.bgRed('Access Token is empty~ '))
+    process.exit(1)
+  }
+  return {
+    hostname: 'api.github.com',
+    path: '/gitignore/templates',
+    headers: {
+      'User-Agent': 'node',
+      'Authorization': 'token ' + ggigToken,
+    },
+  }
 }
 
-const action = () => {
-  const { stop } = dynamicText('Loading', '.', 300)
-  const req = get(
-    requestOption,
-    res => {
-      let data = ''
-      res.on('data', chunk => {
-        data += chunk
-      })
+const action = async () => {
+  try {
+    const ggigToken = await genToken()
+    const option = requestOption(ggigToken)
+    const { stop } = dynamicText('Loading', '.', 300)
+    const req = get(
+      option,
+      res => {
+        let data = ''
+        res.on('data', chunk => {
+          data += chunk
+        })
 
-      res.on('end', () => {
-        stop()
-        if (res.statusCode !== 200) {
-          console.error(chalk.bgRed('something went wrong~ '), '\n', data)
-          return
-        }
-        const result = data.toString('utf-8').replace(/[\[\]"]/g, '').replace(/,/g, ', ')
-        console.log(chalk.bgGreen('Supported Languages:') + '\n')
-        console.log(result)
-      })
-    }
-  )
+        res.on('end', () => {
+          stop()
+          if (res.statusCode !== 200) {
+            console.error(chalk.bgRed('something went wrong~ '), '\n', res.statusCode, '\n', data)
+            return
+          }
+          const result = data.toString('utf-8').replace(/[\[\]"]/g, '').replace(/,/g, ', ')
+          console.log(chalk.bgGreen('Supported Languages:') + '\n')
+          console.log(result)
+        })
+      },
+    )
 
-  req.on('error', err => {
-    console.error(chalk.bgRed('something went wrong~ '), err)
-  })
+    req.on('error', err => {
+      console.error(chalk.bgRed('something went wrong~ '), err)
+    })
+  } catch(err) {
+    console.error(chalk.bgRed('Access Token is empty~ '), err)
+    process.exit(1)
+  }
 }
 
 export default {
