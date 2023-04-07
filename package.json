@@ -1,6 +1,6 @@
 {
   "name": "ggig",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate a '.gitignore' template automaticly with just one command!",
   "main": "./bin/ggig.js",
   "bin": {
