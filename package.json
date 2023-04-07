@@ -7,9 +7,9 @@
     "ggig": "./bin/ggig.js"
   },
   "files": [
-    "./bin",
-    "./commands",
-    "./utils"
+    "bin",
+    "commands",
+    "utils"
   ],
   "repository": {
     "type": "git",

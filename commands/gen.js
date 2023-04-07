@@ -50,10 +50,10 @@ const action = async ({ template }) => {
             return
           }
           const { name, source } = JSON.parse(data)
-          if (await checkFile()) {
-            await fs.appendFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
+          if (exists) {
+            fs.appendFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
           } else {
-            await fs.writeFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
+            fs.writeFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
           }
           console.log(chalk.bgGreen(`git ignore file template for ${name} has been created!`))
         })
