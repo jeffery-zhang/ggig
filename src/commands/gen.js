@@ -1,20 +1,8 @@
 import { get } from 'https'
-import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
-import { ensureFile } from 'fs-extra'
+import { dynamicText } from '../utils/dynamicText.js'
 import { genToken } from '../utils/genToken.js'
-
-const checkFile = async () => {
-  let exists
-  try {
-    await ensureFile('./.gitignore')
-    exists = true
-  } catch (err) {
-    exists = false
-  }
-  return exists
-}
 
 const requestOption = (ggigToken, template) => {
   if (!ggigToken) {
@@ -34,8 +22,9 @@ const requestOption = (ggigToken, template) => {
 const action = async ({ template }) => {
   try {
     const ggigToken = await genToken()
-    const exists = await checkFile()
+    const exists = fs.existsSync('.gitignore')
     const option = requestOption(ggigToken, template)
+    const { stop } = dynamicText('Loading', '.', 300)
     const req = get(
       option,
       res => {
@@ -45,6 +34,7 @@ const action = async ({ template }) => {
         })
     
         res.on('end', async () => {
+          stop()
           if (res.statusCode !== 200) {
             console.error(chalk.bgRed('something went wrong~ '), '\n', res.statusCode, '\n', data)
             return
@@ -61,6 +51,7 @@ const action = async ({ template }) => {
     )
 
     req.on('error', err => {
+      stop()
       console.error(chalk.bgRed('something went wrong~ '), err)
     })
   } catch(err) {

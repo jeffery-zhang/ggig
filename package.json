@@ -2,14 +2,13 @@
   "name": "ggig",
   "version": "1.0.4",
   "description": "Generate a '.gitignore' template automaticly with just one command!",
-  "main": "./bin/ggig.js",
+  "main": "./src/index.js",
   "bin": {
     "ggig": "./bin/ggig.js"
   },
   "files": [
     "bin",
-    "commands",
-    "utils"
+    "src"
   ],
   "repository": {
     "type": "git",

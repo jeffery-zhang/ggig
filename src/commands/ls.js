@@ -45,6 +45,7 @@ const action = async () => {
     )
 
     req.on('error', err => {
+      stop()
       console.error(chalk.bgRed('something went wrong~ '), err)
     })
   } catch(err) {
