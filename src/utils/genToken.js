@@ -25,10 +25,7 @@ const genToken = async () => new Promise((resolve, reject) => {
       if(ggigToken) resolve(ggigToken)
       else reject()
     })
-    return
-  }
-
-  resolve(ggigToken)
+  } else resolve(ggigToken)
 })
 
 export { genToken }
