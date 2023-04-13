@@ -26,6 +26,9 @@ If you don't have any Github Access Token, see <https://docs.github.com/en/authe
 Use 'gen' command to generate '.gitignore' template:
 ``` bash
 ggig gen --template Java
+
+# or
+ggig gen -t Java
 ```
 If you don't pass 'template' parameter, the default template is Node.
 
