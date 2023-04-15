@@ -11,18 +11,6 @@ Or, you can globally install ggig
 npm install -g ggig
 ```
 # Usage
-Before using the ggig command line, please make sure you have a Github Access Token, which can be configured in environment variables.
-``` bash
-# In macOS/Linux
-export GGIG_TOKEN=<access token>
-
-# In Windows
-set GGIG_TOKEN=<access token>
-```
-Or, you can directly input your access token in the prompt dialog
-
-If you don't have any Github Access Token, see <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token> to generate a key.
-
 Use 'gen' command to generate '.gitignore' template:
 ``` bash
 ggig gen --template Java

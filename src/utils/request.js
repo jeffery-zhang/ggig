@@ -1,18 +1,18 @@
-import { get } from 'https'
+import { get } from 'http'
 import chalk from 'chalk'
 import { dynamicText } from './dynamicText.js'
 
-export const request = (path, ggigToken) => {
-  if (!ggigToken || !path) {
-    console.error(chalk.bgRed('Access Token is empty~ '))
+export const request = (path) => {
+  if (!path) {
+    console.error(chalk.bgRed('something went wrong~ '))
     process.exit(1)
   }
   const options = {
-    hostname: 'api.github.com',
+    hostname: 'api.zhj13.com',
+    port: '10086',
     path,
     headers: {
       'User-Agent': 'node',
-      'Authorization': 'token ' + ggigToken,
     },
   }
   const { stop } = dynamicText('Loading', '.', 300)

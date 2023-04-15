@@ -1,14 +1,12 @@
 import chalk from 'chalk'
 import fs from 'fs'
-import { genToken } from '../utils/genToken.js'
 import { request } from '../utils/request.js'
 
 const action = async ({ template }) => {
   try {
-    const ggigToken = await genToken()
     const path = `/gitignore/templates/${template}`
     const exists = fs.existsSync('.gitignore')
-    const data = await request(path, ggigToken)
+    const data = await request(path)
     const { name, source } = JSON.parse(data)
     if (exists) {
       fs.appendFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
