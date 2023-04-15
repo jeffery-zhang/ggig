@@ -7,7 +7,8 @@ const action = async ({ template }) => {
     const path = `/gitignore/templates/${template}`
     const exists = fs.existsSync('.gitignore')
     const data = await request(path)
-    const { name, source } = JSON.parse(data)
+    const result = JSON.parse(data)
+    const { name, source } = JSON.parse(result.data)
     if (exists) {
       fs.appendFileSync('./.gitignore', `# git ignore template for ${name}\n${source}\n`)
     } else {

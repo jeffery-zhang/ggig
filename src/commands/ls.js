@@ -5,7 +5,7 @@ const action = async () => {
   try {
     const path = '/gitignore/templates'
     const data = await request(path)
-    const result = data.toString('utf-8').replace(/[\[\]"]/g, '').replace(/,/g, ', ')
+    const result = JSON.parse(data)
     console.log(chalk.bgGreen('Supported Languages:') + '\n')
     console.log(result)
   } catch (err) {
