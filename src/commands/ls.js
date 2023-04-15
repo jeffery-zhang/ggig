@@ -7,7 +7,7 @@ const action = async () => {
     const data = await request(path)
     const result = JSON.parse(data)
     console.log(chalk.bgGreen('Supported Languages:') + '\n')
-    console.log(result)
+    console.log(result.data)
   } catch (err) {
     console.error(chalk.bgRed('Access Token is empty~ '), err)
     process.exit(1)
