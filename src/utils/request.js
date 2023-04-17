@@ -1,4 +1,4 @@
-import { get } from 'http'
+import { get } from 'https'
 import chalk from 'chalk'
 import { dynamicText } from './dynamicText.js'
 
