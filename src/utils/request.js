@@ -9,8 +9,7 @@ export const request = (path) => {
   }
   const options = {
     hostname: 'api.zhj13.com',
-    port: '10086',
-    path,
+    path: `/api${path}`,
     headers: {
       'User-Agent': 'node',
     },
