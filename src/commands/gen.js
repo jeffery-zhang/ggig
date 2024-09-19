@@ -6,22 +6,22 @@ const action = async ({ template }) => {
   try {
     const path = `/${template}`;
     const exists = fs.existsSync(".gitignore");
-    const data = await request(path);
-    const result = JSON.parse(data);
-    const { name, source } = JSON.parse(result.data);
+    const source = await request(path);
     if (exists) {
       fs.appendFileSync(
         "./.gitignore",
-        `# git ignore template for ${name}\n${source}\n`
+        `# git ignore template for ${template}\n${source}\n`
       );
     } else {
       fs.writeFileSync(
         "./.gitignore",
-        `# git ignore template for ${name}\n${source}\n`
+        `# git ignore template for ${template}\n${source}\n`
       );
     }
     console.log(
-      chalk.bgGreen(`git ignore file template for ${name} has been created!`)
+      chalk.bgGreen(
+        `git ignore file template for ${template} has been created!`
+      )
     );
   } catch (err) {
     console.error(chalk.bgRed("Access Token is empty~ "), err);
