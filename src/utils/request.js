@@ -9,7 +9,7 @@ export const request = (path) => {
   }
   const options = {
     hostname: "gitignore.zhj13.com",
-    path: `/api${path}`,
+    path,
     headers: {
       "User-Agent": "node",
     },
