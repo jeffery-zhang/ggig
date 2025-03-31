@@ -1,5 +1,5 @@
-import { get } from "https";
 import chalk from "chalk";
+import { get } from "https";
 import { dynamicText } from "./dynamicText.js";
 
 export const request = (path) => {
@@ -8,7 +8,7 @@ export const request = (path) => {
     process.exit(1);
   }
   const options = {
-    hostname: "gitignore.zhj13.com",
+    hostname: "gitignore.zhj13.top",
     path,
     headers: {
       "User-Agent": "node",
